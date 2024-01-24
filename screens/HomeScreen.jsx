@@ -10,7 +10,7 @@ import { Post } from "../components/Post";
 import { Loading } from "../components/Loading";
 import axios from "axios";
 
-export const HomeScreen = () => {
+export const HomeScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [items, setItems] = useState([]);
 
@@ -43,7 +43,14 @@ export const HomeScreen = () => {
         }
         data={items}
         renderItem={({ item }) => (
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("FullPost", {
+                id: item.id,
+                title: item.name,
+              })
+            }
+          >
             <Post
               imageUrl={item.imageUrl}
               title={item.name}

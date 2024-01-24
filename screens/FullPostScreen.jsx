@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -14,13 +14,19 @@ const PostText = styled.Text`
   font-size: 18px;
   line-height: 24px;
 `;
-export const FullPostScreen = () => {
+export const FullPostScreen = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
+  const { id, title } = route.params;
 
   useEffect(() => {
+    navigation.setOptions({
+      title,
+    });
     axios
-      .get("https://65b0f0d3d16d31d11bdd9edd.mockapi.io/pocemons/pocemons/2")
+      .get(
+        "https://65b0f0d3d16d31d11bdd9edd.mockapi.io/pocemons/pocemons/" + id
+      )
       .then(({ data }) => {
         setData(data);
       })
