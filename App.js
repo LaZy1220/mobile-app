@@ -1,6 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
-import { FlatList, Alert, View, ActivityIndicator, Text } from "react-native";
+import {
+  FlatList,
+  Alert,
+  View,
+  ActivityIndicator,
+  Text,
+  RefreshControl,
+  TouchableOpacity,
+} from "react-native";
 import { Post } from "./components/Post";
 import axios from "axios";
 
@@ -45,13 +53,18 @@ export default function App() {
     <View>
       <StatusBar style="auto" />
       <FlatList
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={fetchPosts} />
+        }
         data={items}
         renderItem={({ item }) => (
-          <Post
-            imageUrl={item.imageUrl}
-            title={item.name}
-            createdAt={item.createdAt}
-          />
+          <TouchableOpacity>
+            <Post
+              imageUrl={item.imageUrl}
+              title={item.name}
+              createdAt={item.createdAt}
+            />
+          </TouchableOpacity>
         )}
       />
     </View>
